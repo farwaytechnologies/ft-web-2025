@@ -1,0 +1,11 @@
+/* Portfolio Page Specific Styles */
+
+/* Custom logo size for portfolio page */
+.portfolio-page .logo img {
+    height: 40px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
+}
+
+/* Add portfolio-page class to body in portfolio.html */

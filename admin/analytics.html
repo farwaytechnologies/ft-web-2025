@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/admin-pages.css">
+    <link rel="stylesheet" href="css/analytics.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/images/logo.png" alt="Logo" class="dashboard-logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="users.html"><i class="fas fa-users"></i> Users</a>
+                    </li>
+                    <li>
+                        <a href="content.html"><i class="fas fa-file-alt"></i> Content</a>
+                    </li>
+                    <li>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    </li>
+                    <li class="active">
+                        <a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <div class="date-range-picker">
+                    <select id="dateRange">
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary"><i class="fas fa-download"></i> Export Report</button>
+                </div>
+            </header>
+
+            <!-- Analytics Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #2196F3;">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Page Views</h3>
+                        <p class="stat-number">45,678</p>
+                        <span class="stat-change positive">+12.5% <i class="fas fa-arrow-up"></i></span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #4CAF50;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Active Users</h3>
+                        <p class="stat-number">2,345</p>
+                        <span class="stat-change positive">+8.3% <i class="fas fa-arrow-up"></i></span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #FF9800;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Avg. Session</h3>
+                        <p class="stat-number">4m 32s</p>
+                        <span class="stat-change positive">+5.7% <i class="fas fa-arrow-up"></i></span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #E91E63;">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Bounce Rate</h3>
+                        <p class="stat-number">32.4%</p>
+                        <span class="stat-change negative">+2.1% <i class="fas fa-arrow-up"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Analytics -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Traffic Sources</h3>
+                    <canvas id="trafficSourcesChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>User Engagement</h3>
+                    <canvas id="userEngagementChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Popular Content -->
+            <div class="table-card">
+                <div class="card-header">
+                    <h3>Popular Content</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Views</th>
+                                <th>Avg. Time</th>
+                                <th>Bounce Rate</th>
+                                <th>Conversion Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>/home</td>
+                                <td>12,345</td>
+                                <td>2m 15s</td>
+                                <td>28.5%</td>
+                                <td>3.2%</td>
+                            </tr>
+                            <tr>
+                                <td>/products</td>
+                                <td>8,765</td>
+                                <td>3m 45s</td>
+                                <td>32.1%</td>
+                                <td>4.5%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/analytics.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize analytics dashboard
+            try {
+                initializeAnalyticsDashboard();
+            } catch (error) {
+                console.error('Failed to initialize analytics dashboard:', error);
+                // Show error message to user
+                const mainContent = document.querySelector('.dashboard-main');
+                mainContent.innerHTML = `
+                    <div class="error-message" style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: #f44336;"></i>
+                        <h2>Failed to load analytics</h2>
+                        <p>Please try refreshing the page. If the problem persists, contact support.</p>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
